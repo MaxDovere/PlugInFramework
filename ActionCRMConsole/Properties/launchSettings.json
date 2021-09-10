@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "ActionCRMConsole": {
+      "commandName": "Project",
+      "commandLineArgs": "/action /functionname:ImportLeads;ImportEstimated"
+    }
+  }
+}
