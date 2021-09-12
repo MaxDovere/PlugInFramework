@@ -1,4 +1,5 @@
-﻿using PlugInBase.Abstractions;
+﻿using PlugInBase;
+using PlugInBase.Abstractions;
 using PlugInBase.Models;
 using PlugInManager.Shared;
 using System;
@@ -10,8 +11,9 @@ using System.Reflection;
 
 namespace PlugInManager
 {
-    public class PlugInHandlerContext
+    public static class PlugInHandlerContext
     {
+        public static PlugInEventHandler<IPlugIn, string, PlugInEventArgs> HandleFunction { get; set; }
         public static List<IPlugIn> LoadPlugins(string[] pluginPaths)
         {
             return ResolvePathsToLocal(pluginPaths).SelectMany(pluginPath =>
@@ -20,6 +22,8 @@ namespace PlugInManager
                 IEnumerable<IPlugIn> pluginsFromAssembly = CreateAllPluginsInAssembly(pluginAssembly);
                 foreach (IPlugIn plugin in pluginsFromAssembly)
                 {
+                    plugin.PlugInNotifier += HandleFunction;
+
                     plugin.OnLoad(null);
                 }
                 return pluginsFromAssembly;
@@ -81,7 +85,7 @@ namespace PlugInManager
             }
         }
 
-        public static PlugInReturnData RunPlugins(ArgumentsParser argParser, IEnumerable<IPlugIn> plugins)
+        public static PlugInReturnData<T> RunPlugins<T>(ArgumentsParser argParser, IEnumerable<IPlugIn> plugins)
         {
             List<string> targetPlugins = argParser.GetValues(ArgumentsConfig.TargetPlugins);
             if (targetPlugins == null)
@@ -104,7 +108,9 @@ namespace PlugInManager
 
                 foreach(string function in argParser.GetValues(ArgumentsConfig.FunctionName))
                 {
-                    PlugInReturnData task = plugin.ExecuteFunction(function, null);
+                    plugin.PlugInNotifier += HandleFunction;
+                    PlugInReturnData<T> task = plugin.ExecuteFunction<T>(function, null);
+
                 }
 
                 //Task<PlugInReturnData> task0 = plugin.ExecuteFunctionAsync(argParser.GetValues(ArgumentsConfig.FunctionName)[0], null);
@@ -179,6 +185,8 @@ namespace PlugInManager
             foreach (IPlugIn plugin in plugins)
             {
                 plugin.OnUnload();
+                plugin.PlugInNotifier -= HandleFunction;
+
             }
             plugins = new List<IPlugIn>();
         }

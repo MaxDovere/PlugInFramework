@@ -13,5 +13,9 @@ namespace PlugInBase.Models
             Name = name;
             Data = data;
         }
+
+        public PlugInSettings()
+        {
+        }
     }
 }

@@ -1,6 +1,4 @@
 ﻿using PlugInBase.Models;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace PlugInBase.Abstractions
 {
@@ -10,8 +8,10 @@ namespace PlugInBase.Abstractions
         string Description { get; }
         string OrderId { get; }
 
+        event PlugInEventHandler<IPlugIn, string, PlugInEventArgs> PlugInNotifier;
+
         void OnLoad(PlugInConfig config);
         void OnUnload();
-        PlugInReturnData ExecuteFunction(string namefunction, PlugInSettings settings);
+        PlugInReturnData<T> ExecuteFunction<T>(string namefunction, PlugInEventArgs args);
     }
 }

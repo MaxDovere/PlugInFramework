@@ -1,16 +1,36 @@
 ﻿using Newtonsoft.Json;
+using PlugInBase;
 using PlugInBase.Abstractions;
 using PlugInBase.Models;
 using System;
-using System.Collections.Generic;
 using System.Reflection;
-using System.Threading.Tasks;
 
 namespace PlugInJson
 {
     public class PlugInJson : IPlugIn
     {
-        public string Name => "json";
+        private PlugInEventHandler<IPlugIn, string, PlugInEventArgs> _HandlerEventListNotifier;
+
+
+        public PlugInJson()
+        {
+            //EventListNotifier += HandlePlugInChange;
+        }
+
+        event PlugInEventHandler<IPlugIn, string, PlugInEventArgs> IPlugIn.PlugInNotifier
+        {
+            add
+            {
+                _HandlerEventListNotifier += value;
+            }
+
+            remove
+            {
+                _HandlerEventListNotifier -= value;
+            }
+        }
+
+        public string Name => "PlugInJson";
 
         public string Description => "Outputs JSON value.";
 
@@ -24,20 +44,27 @@ namespace PlugInJson
             public string User;
             public DateTime Date;
         }
-
+        //public void HandlePlugInChange(IPlugIn plugin, PlugInEventArgs args) 
+        //{
+        //    string mes = $"Id: {args.Id}- Message: {args.Message}";
+        //    Console.WriteLine($"Setting Name {plugin.Name}: {mes}");
+        //}
         public void OnLoad(PlugInConfig config)
         {
-            Console.WriteLine($"Event OnLoading {this}");
+            string message = $"Event OnLoading {this}";
+
+            _HandlerEventListNotifier(this, message, null);
         }
 
         public void OnUnload()
         {
-            Console.WriteLine($"Event OnUnLoading {this}");
+            string message = $"Event OnUnLoading {this}";
+            _HandlerEventListNotifier(this, message, null);
         }
 
-        public PlugInReturnData ExecuteFunction(string namefunction, PlugInSettings settings)
+        public PlugInReturnData<T> ExecuteFunction<T>(string namefunction, PlugInEventArgs args)
         {
-            Console.WriteLine($"Event executeFunction {this}");
+            _HandlerEventListNotifier(this, $"Event executeFunction {this}", null);
 
             switch (namefunction.ToLower())
             {
@@ -52,7 +79,7 @@ namespace PlugInJson
         }
         private void ImportLeads()
         {
-            Console.WriteLine($"ImportLeads: Event World Task {this}");
+            _HandlerEventListNotifier(this, $"ImportLeads: Event World Task {this}", null);
 
             Assembly jsonAssembly = typeof(JsonConvert).Assembly;
             Info info = new Info()
@@ -66,5 +93,6 @@ namespace PlugInJson
 
             Console.WriteLine(JsonConvert.SerializeObject(info, Formatting.Indented));
         }
+
     }
 }

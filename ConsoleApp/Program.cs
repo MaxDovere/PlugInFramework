@@ -1,4 +1,5 @@
 ﻿using PlugInBase.Abstractions;
+using PlugInBase.Models;
 using PlugInManager;
 using PlugInManager.Shared;
 using System;
@@ -9,7 +10,7 @@ using System.Net;
 
 namespace ConsoleApp
 {
-    class Program
+    public class Program
     {
         static void Main(string[] args)
         {
@@ -35,13 +36,15 @@ namespace ConsoleApp
                     return;
                 }
 
+                PlugInHandlerContext.HandleFunction = HandlePlugInChange;
+
                 // Inserisce la lista dei plugins dal folder previsto daio parametri
                 List<string> pluginPaths = ResolvePluginPaths(argParser);
 
                 // Load plugins and invoke OnLoad for each
                 IEnumerable<IPlugIn> plugins = PlugInHandlerContext.LoadPlugins(pluginPaths.ToArray());
 
-                PlugInHandlerContext.RunPlugins(argParser, plugins);
+                PlugInHandlerContext.RunPlugins<string>(argParser, plugins);
 
                 PlugInHandlerContext.UnloadPlugins(ref plugins);
             }
@@ -50,7 +53,12 @@ namespace ConsoleApp
                 Console.WriteLine(ex);
             }
         }
-
+        public static void HandlePlugInChange(IPlugIn plugin, string message, PlugInEventArgs args)
+        {
+            int id = args == null ? 0 : args.Id;
+            string mes = $"Id: {id}- Message: {message}";
+            Console.WriteLine($"Setting Name {plugin.Name}: {mes}");
+        }
         private static List<string> ResolvePluginPaths(ArgumentsParser argParser)
         {
             // Get the plugins in the plugin folder
