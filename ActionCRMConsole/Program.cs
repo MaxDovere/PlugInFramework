@@ -1,5 +1,4 @@
-﻿using PlugInBase;
-using PlugInBase.Abstractions;
+﻿using PlugInBase.Abstractions;
 using PlugInManager;
 using PlugInManager.Shared;
 using System;
@@ -7,9 +6,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
-using System.Threading.Tasks;
 
-namespace ActionCRMConsole
+namespace ConsoleApp
 {
     class Program
     {

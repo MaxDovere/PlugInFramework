@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31605.320
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ActionCRMConsole", "ActionCRMConsole\ActionCRMConsole.csproj", "{85B66EF4-3E04-48EB-8A1C-3B6292D1F87A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConsoleApp", "ActionCRMConsole\ConsoleApp.csproj", "{85B66EF4-3E04-48EB-8A1C-3B6292D1F87A}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PlugInBase", "PluginBase\PlugInBase.csproj", "{B10759C1-D8E6-428B-9B7C-015941232AB9}"
 EndProject
