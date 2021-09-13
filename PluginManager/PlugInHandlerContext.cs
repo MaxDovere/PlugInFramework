@@ -111,78 +111,19 @@ namespace PlugInManager
                 foreach(string function in argParser.GetValues(ArgumentsConfig.FunctionName))
                 {
                     plugin.PlugInNotifier += NotificationFunction;
-
+                    // Generic Method to IPlugIn with Model Arguments
                     PlugInReturnData<T> task = plugin.ExecuteFunction<T>(function, null);
-                    
+                    // Specific Invoke Method to Type IPlugIn with Array Arguments
+                    var res = plugin.GetType().GetMethod("Add").Invoke(plugin, new object[] { "Add21" , "Add22" });
+                    Console.WriteLine(res);
+
                     plugin.PlugInNotifier -= NotificationFunction;
 
                 }
 
-                //Task<PlugInReturnData> task0 = plugin.ExecuteFunctionAsync(argParser.GetValues(ArgumentsConfig.FunctionName)[0], null);
-                //Task<PlugInReturnData> task1 = plugin.ExecuteFunctionAsync(argParser.GetValues(ArgumentsConfig.FunctionName)[1], null);
-
-                //var Tasks = new List<Task> { task0, task1 };
-                //Task.WhenAll(Tasks);
                 Console.WriteLine("Plugin.Tasks complete");
-
-                //while (Tasks.Count > 0)
-                //{
-
-                //    //Task<PlugInReturnData> finishedTask = (Task<PlugInReturnData>)await Task.WhenAny<PlugInReturnData>(Tasks, Task.Delay(5000));
-                //    if (finishedTask == task0)
-                //    {
-                //        Console.WriteLine("Plugin complete");
-                //    }
-                //    else if (finishedTask == task1)
-                //    {
-                //        Console.WriteLine("Plugin complete");
-                //    }
-                //    Tasks.Remove(finishedTask);
-                //}
-                //task.RunSynchronously();
-                //if (!tasks.IsCompletedSuccessfully)
-                //{
-                //    Console.WriteLine("Plugin failed");
-
-                //    Exception ex = task.Exception;
-                //    while (ex != null)
-                //    {
-                //        Console.WriteLine(ex.Message);
-                //        ex = ex.InnerException;
-                //    }
-                //}
-
-                //Task<PlugInReturnData> task = plugin.ExecuteFunction("", null);
-                //try
-                //{
-                //    List<PlugInReturnData> task = plugin.ExecuteFunctions(argParser.GetValues(ArgumentsConfig.FunctionName), null);
-                //    //PlugInReturnData task = plugin.ExecuteFunction(argParser.GetValues(ArgumentsConfig.FunctionName), null);
-                //    Console.WriteLine("Plugin complete");
-                //}
-                //catch(PlugInException pex)
-                //{
-                //    Console.WriteLine($"Plugin failed: {pex.Message}");
-
-                //}
-                //task.RunSynchronously();
-                //if (!task.IsCompletedSuccessfully)
-                //if (task.Is == "")
-                //{
-
-                //    Exception ex = task.Exception;
-                //    while (ex != null)
-                //    {
-                //        Console.WriteLine(ex.Message);
-                //        ex = ex.InnerException;
-                //    }
-                //}
-                //else
-                //{
-                //    Console.WriteLine("Plugin complete");
-                //}
             }
             return null;
-
         }
 
         public static void UnloadPlugins(ref IEnumerable<IPlugIn> plugins)
@@ -194,7 +135,6 @@ namespace PlugInManager
                 plugin.OnUnload();
                 
                 plugin.PlugInNotifier -= NotificationFunction;
-
             }
             plugins = new List<IPlugIn>();
         }

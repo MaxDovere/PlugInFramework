@@ -53,6 +53,11 @@ namespace PlugInJson
 
             return null;
         }
+
+        public string Add(string name, string name2)  // Object[] parms)
+        {
+            return $"{Name}.{name}.{name2}";
+        }
         private void ImportLeads()
         {
             PlugInNotifier(this, $"ImportLeads: Event World Task {this}", null);
