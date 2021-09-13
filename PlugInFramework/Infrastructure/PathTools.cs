@@ -3,7 +3,7 @@ using System.IO;
 using System.Linq;
 using System.Web;
 
-namespace PlugInFramework.PlugInManager
+namespace PlugInFramework.PlugInManager.Infrastructure
 {
     public static class PathTools
     {

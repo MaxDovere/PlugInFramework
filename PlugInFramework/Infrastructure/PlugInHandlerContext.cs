@@ -9,7 +9,7 @@ using System.Linq;
 using System.Net;
 using System.Reflection;
 
-namespace PlugInFramework.PlugInManager
+namespace PlugInFramework.PlugInManager.Infrastructure
 {
     public static class PlugInHandlerContext
     {

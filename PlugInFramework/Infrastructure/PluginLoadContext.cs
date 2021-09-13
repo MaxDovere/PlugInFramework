@@ -2,7 +2,7 @@
 using System.Reflection;
 using System.Runtime.Loader;
 
-namespace PlugInFramework.PlugInManager
+namespace PlugInFramework.PlugInManager.Infrastructure
 {
     class PluginLoadContext : AssemblyLoadContext
     {

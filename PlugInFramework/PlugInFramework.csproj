@@ -5,7 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ConsoleApp\PlugInFramework.Shared\PlugInFramework.Shared.csproj" />
+    <ProjectReference Include="..\PlugInFramework.Shared\PlugInFramework.Shared.csproj" />
   </ItemGroup>
 
 </Project>

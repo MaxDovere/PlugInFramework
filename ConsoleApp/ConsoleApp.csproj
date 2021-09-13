@@ -10,8 +10,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\PlugInFramework\PlugInFramework.csproj" />
-    <ProjectReference Include="..\PluginManager.Shared\PlugInFramework.Shared.csproj" />
+    <ProjectReference Include="..\PlugInFramework.Shared\PlugInFramework.Shared.csproj" />
+    <ProjectReference Include="..\PlugInFramework\PlugInFramework.csproj" />
   </ItemGroup>
 
 </Project>

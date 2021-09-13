@@ -1,6 +1,6 @@
 ﻿using PlugInFramework.Models;
 using PlugInFramework.PlugInBase.Abstractions;
-using PlugInFramework.PlugInManager;
+using PlugInFramework.PlugInManager.Infrastructure;
 using PlugInFramework.PlugInManager.Shared;
 using System;
 using System.Collections.Generic;
