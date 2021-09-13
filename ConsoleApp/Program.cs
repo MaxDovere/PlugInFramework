@@ -1,7 +1,7 @@
-﻿using PlugInBase.Abstractions;
-using PlugInBase.Models;
-using PlugInManager;
-using PlugInManager.Shared;
+﻿using PlugInFramework.Models;
+using PlugInFramework.PlugInBase.Abstractions;
+using PlugInFramework.PlugInManager;
+using PlugInFramework.PlugInManager.Shared;
 using System;
 using System.Collections.Generic;
 using System.IO;

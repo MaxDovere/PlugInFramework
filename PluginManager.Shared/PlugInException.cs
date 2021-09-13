@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace PlugInManager.Shared
+namespace PlugInFramework.PlugInManager.Shared
 {
     public class PlugInException: Exception
     {

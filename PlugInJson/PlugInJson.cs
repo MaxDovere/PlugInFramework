@@ -1,7 +1,7 @@
 ﻿using Newtonsoft.Json;
-using PlugInBase;
-using PlugInBase.Abstractions;
-using PlugInBase.Models;
+using PlugInFramework.Models;
+using PlugInFramework.PlugInBase.Abstractions;
+using PlugInFramework.PlugInManager;
 using System;
 using System.Reflection;
 

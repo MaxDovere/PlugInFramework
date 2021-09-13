@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace PlugInManager.Shared
+namespace PlugInFramework.PlugInManager.Shared
 {
     public class ArgumentsParser
     {
