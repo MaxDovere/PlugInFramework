@@ -8,7 +8,7 @@ namespace PlugInBase.Abstractions
         string Description { get; }
         string OrderId { get; }
 
-        event PlugInEventHandler<IPlugIn, string, PlugInEventArgs> PlugInNotifier;
+        event DelegateHandlers.PlugInEventHandler<IPlugIn, string, PlugInEventArgs> PlugInNotifier;
 
         void OnLoad(PlugInConfig config);
         void OnUnload();

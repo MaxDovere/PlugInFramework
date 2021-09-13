@@ -36,7 +36,7 @@ namespace ConsoleApp
                     return;
                 }
 
-                PlugInHandlerContext.HandleFunction = HandlePlugInChange;
+                PlugInHandlerContext.NotificationFunction = NotificationPlugInChange;
 
                 // Inserisce la lista dei plugins dal folder previsto daio parametri
                 List<string> pluginPaths = ResolvePluginPaths(argParser);
@@ -53,7 +53,7 @@ namespace ConsoleApp
                 Console.WriteLine(ex);
             }
         }
-        public static void HandlePlugInChange(IPlugIn plugin, string message, PlugInEventArgs args)
+        public static void NotificationPlugInChange(IPlugIn plugin, string message, PlugInEventArgs args)
         {
             int id = args == null ? 0 : args.Id;
             string mes = $"Id: {id}- Message: {message}";

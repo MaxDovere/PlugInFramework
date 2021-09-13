@@ -13,7 +13,7 @@ namespace PlugInManager
 {
     public static class PlugInHandlerContext
     {
-        public static PlugInEventHandler<IPlugIn, string, PlugInEventArgs> HandleFunction { get; set; }
+        public static DelegateHandlers.PlugInEventHandler<IPlugIn, string, PlugInEventArgs> NotificationFunction { get; set; }
         public static List<IPlugIn> LoadPlugins(string[] pluginPaths)
         {
             return ResolvePathsToLocal(pluginPaths).SelectMany(pluginPath =>
@@ -22,9 +22,11 @@ namespace PlugInManager
                 IEnumerable<IPlugIn> pluginsFromAssembly = CreateAllPluginsInAssembly(pluginAssembly);
                 foreach (IPlugIn plugin in pluginsFromAssembly)
                 {
-                    plugin.PlugInNotifier += HandleFunction;
+                    plugin.PlugInNotifier += NotificationFunction;
 
                     plugin.OnLoad(null);
+
+                    plugin.PlugInNotifier -= NotificationFunction;
                 }
                 return pluginsFromAssembly;
             }).ToList();
@@ -108,8 +110,11 @@ namespace PlugInManager
 
                 foreach(string function in argParser.GetValues(ArgumentsConfig.FunctionName))
                 {
-                    plugin.PlugInNotifier += HandleFunction;
+                    plugin.PlugInNotifier += NotificationFunction;
+
                     PlugInReturnData<T> task = plugin.ExecuteFunction<T>(function, null);
+                    
+                    plugin.PlugInNotifier -= NotificationFunction;
 
                 }
 
@@ -184,8 +189,11 @@ namespace PlugInManager
         {
             foreach (IPlugIn plugin in plugins)
             {
+                plugin.PlugInNotifier += NotificationFunction;
+
                 plugin.OnUnload();
-                plugin.PlugInNotifier -= HandleFunction;
+                
+                plugin.PlugInNotifier -= NotificationFunction;
 
             }
             plugins = new List<IPlugIn>();

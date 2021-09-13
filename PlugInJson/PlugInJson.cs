@@ -9,26 +9,7 @@ namespace PlugInJson
 {
     public class PlugInJson : IPlugIn
     {
-        private PlugInEventHandler<IPlugIn, string, PlugInEventArgs> _HandlerEventListNotifier;
-
-
-        public PlugInJson()
-        {
-            //EventListNotifier += HandlePlugInChange;
-        }
-
-        event PlugInEventHandler<IPlugIn, string, PlugInEventArgs> IPlugIn.PlugInNotifier
-        {
-            add
-            {
-                _HandlerEventListNotifier += value;
-            }
-
-            remove
-            {
-                _HandlerEventListNotifier -= value;
-            }
-        }
+        public event DelegateHandlers.PlugInEventHandler<IPlugIn, string, PlugInEventArgs> PlugInNotifier;
 
         public string Name => "PlugInJson";
 
@@ -44,27 +25,22 @@ namespace PlugInJson
             public string User;
             public DateTime Date;
         }
-        //public void HandlePlugInChange(IPlugIn plugin, PlugInEventArgs args) 
-        //{
-        //    string mes = $"Id: {args.Id}- Message: {args.Message}";
-        //    Console.WriteLine($"Setting Name {plugin.Name}: {mes}");
-        //}
         public void OnLoad(PlugInConfig config)
         {
             string message = $"Event OnLoading {this}";
 
-            _HandlerEventListNotifier(this, message, null);
+            PlugInNotifier(this, message, null);
         }
 
         public void OnUnload()
         {
             string message = $"Event OnUnLoading {this}";
-            _HandlerEventListNotifier(this, message, null);
+            PlugInNotifier(this, message, null);
         }
 
         public PlugInReturnData<T> ExecuteFunction<T>(string namefunction, PlugInEventArgs args)
         {
-            _HandlerEventListNotifier(this, $"Event executeFunction {this}", null);
+            PlugInNotifier(this, $"Event executeFunction {this}", null);
 
             switch (namefunction.ToLower())
             {
@@ -79,7 +55,7 @@ namespace PlugInJson
         }
         private void ImportLeads()
         {
-            _HandlerEventListNotifier(this, $"ImportLeads: Event World Task {this}", null);
+            PlugInNotifier(this, $"ImportLeads: Event World Task {this}", null);
 
             Assembly jsonAssembly = typeof(JsonConvert).Assembly;
             Info info = new Info()
@@ -90,8 +66,8 @@ namespace PlugInJson
                 User = Environment.UserName,
                 Date = DateTime.Now
             };
-
-            Console.WriteLine(JsonConvert.SerializeObject(info, Formatting.Indented));
+            string message = JsonConvert.SerializeObject(info, Formatting.Indented);
+            PlugInNotifier(this, $"ImportLeads: Event World Task the end {message}", null);
         }
 
     }
